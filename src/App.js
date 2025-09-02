@@ -93,25 +93,34 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-black via-green-950 to-black relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-green-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-green-400/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-white mb-3 tracking-tight">
-            Steganography Tool
+          <h1 className="text-5xl font-bold text-white mb-3 tracking-tight animate-pulse" style={{animationDuration: '3s'}}>
+            <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+              StegoCrafter
+            </span>
           </h1>
-          <p className="text-purple-200 text-lg">Hide secret messages in images</p>
+          <p className="text-green-300 text-lg">Hide secret messages in images</p>
         </div>
 
         {/* Mode Toggle */}
         <div className="flex justify-center mb-8">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-1 flex">
+          <div className="bg-black/50 backdrop-blur-sm rounded-lg p-1 flex border border-green-500/30">
             <button
               onClick={() => { setMode('encode'); resetForm(); }}
               className={`px-6 py-3 rounded-md font-semibold transition-all flex items-center gap-2 ${
                 mode === 'encode'
-                  ? 'bg-purple-600 text-white shadow-lg'
-                  : 'text-gray-300 hover:text-white'
+                  ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/50'
+                  : 'text-gray-300 hover:text-green-300'
               }`}
             >
               <Lock size={20} />
@@ -121,8 +130,8 @@ function App() {
               onClick={() => { setMode('decode'); resetForm(); }}
               className={`px-6 py-3 rounded-md font-semibold transition-all flex items-center gap-2 ${
                 mode === 'decode'
-                  ? 'bg-purple-600 text-white shadow-lg'
-                  : 'text-gray-300 hover:text-white'
+                  ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/50'
+                  : 'text-gray-300 hover:text-green-300'
               }`}
             >
               <Unlock size={20} />
@@ -133,11 +142,13 @@ function App() {
 
         {/* Main Content */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-800/30 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-purple-500/20">
+          <div className="bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-green-500/30 relative">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 animate-pulse" style={{animationDuration: '4s'}}></div>
+            <div className="relative z-10">
             
             {/* Image Upload */}
             <div className="mb-6">
-              <label className="block text-purple-200 text-sm font-semibold mb-3">
+              <label className="block text-green-300 text-sm font-semibold mb-3">
                 Select Image
               </label>
               <div className="relative">
@@ -157,16 +168,16 @@ function App() {
                       <img
                         src={imagePreview}
                         alt="Selected"
-                        className="w-full h-64 object-cover rounded-lg"
+                        className="w-full h-64 object-cover rounded-lg border border-green-500/30"
                       />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                        <p className="text-white font-semibold">Click to change image</p>
+                        <p className="text-green-300 font-semibold">Click to change image</p>
                       </div>
                     </div>
                   ) : (
-                    <div className="border-2 border-dashed border-purple-500/50 rounded-lg p-12 text-center hover:border-purple-400 transition-colors">
-                      <Upload className="mx-auto mb-4 text-purple-400" size={48} />
-                      <p className="text-purple-200 font-medium">Click to upload image</p>
+                    <div className="border-2 border-dashed border-green-500/50 rounded-lg p-12 text-center hover:border-green-400 transition-colors hover:shadow-lg hover:shadow-green-500/20">
+                      <Upload className="mx-auto mb-4 text-green-400 animate-bounce" size={48} />
+                      <p className="text-green-300 font-medium">Click to upload image</p>
                       <p className="text-gray-400 text-sm mt-2">PNG, JPG up to 10MB</p>
                     </div>
                   )}
@@ -177,7 +188,7 @@ function App() {
             {/* Message Input (Encode Mode) */}
             {mode === 'encode' && (
               <div className="mb-6">
-                <label className="block text-purple-200 text-sm font-semibold mb-3">
+                <label className="block text-green-300 text-sm font-semibold mb-3">
                   <FileText className="inline mr-2" size={16} />
                   Secret Message
                 </label>
@@ -185,7 +196,7 @@ function App() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Enter your secret message..."
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-purple-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-black/50 border border-green-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:shadow-lg focus:shadow-green-500/20 transition-all resize-none"
                   rows="4"
                 />
                 <p className="text-gray-400 text-sm mt-2">
@@ -196,7 +207,7 @@ function App() {
 
             {/* Password Input */}
             <div className="mb-6">
-              <label className="block text-purple-200 text-sm font-semibold mb-3">
+              <label className="block text-green-300 text-sm font-semibold mb-3">
                 <Lock className="inline mr-2" size={16} />
                 Password (Optional)
               </label>
@@ -206,12 +217,12 @@ function App() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password for encryption..."
-                  className="w-full px-4 py-3 pr-12 bg-gray-900/50 border border-purple-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 transition-colors"
+                  className="w-full px-4 py-3 pr-12 bg-black/50 border border-green-500/30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:shadow-lg focus:shadow-green-500/20 transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-purple-400 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-400 transition-colors"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -237,10 +248,11 @@ function App() {
             <button
               onClick={mode === 'encode' ? handleEncode : handleDecode}
               disabled={isProcessing || !selectedImage || (mode === 'encode' && !message)}
-              className="w-full py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg hover:from-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+              className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-lg hover:from-green-600 hover:to-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/30 relative overflow-hidden group"
             >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
               {isProcessing ? (
-                <span className="flex items-center justify-center">
+                <span className="flex items-center justify-center relative">
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -248,7 +260,7 @@ function App() {
                   Processing...
                 </span>
               ) : (
-                <span className="flex items-center justify-center">
+                <span className="flex items-center justify-center relative">
                   {mode === 'encode' ? (
                     <>
                       <Lock className="mr-2" size={20} />
@@ -268,27 +280,28 @@ function App() {
             {mode === 'encode' && encodedImageBlob && (
               <button 
                 onClick={handleDownload}
-                className="w-full mt-4 py-4 bg-gray-700 text-white font-bold rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center">
+                className="w-full mt-4 py-4 bg-gray-900/80 text-green-300 font-bold rounded-lg hover:bg-gray-800 border border-green-500/30 hover:border-green-400 transition-all flex items-center justify-center hover:shadow-lg hover:shadow-green-500/20">
                 <Download className="mr-2" size={20} />
                 Download Encoded Image
               </button>
             )}
+            </div>
           </div>
 
           {/* Info Section */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-gray-800/20 backdrop-blur-sm rounded-lg p-4 border border-purple-500/10">
-              <Image className="text-purple-400 mb-2" size={24} />
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 border border-green-500/20 hover:border-green-400 transition-all hover:shadow-lg hover:shadow-green-500/20">
+              <Image className="text-green-400 mb-2 animate-pulse" size={24} style={{animationDuration: '3s'}} />
               <h3 className="text-white font-semibold mb-1">Invisible</h3>
               <p className="text-gray-400 text-sm">Messages are hidden in pixel data</p>
             </div>
-            <div className="bg-gray-800/20 backdrop-blur-sm rounded-lg p-4 border border-purple-500/10">
-              <Lock className="text-purple-400 mb-2" size={24} />
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 border border-green-500/20 hover:border-green-400 transition-all hover:shadow-lg hover:shadow-green-500/20">
+              <Lock className="text-green-400 mb-2 animate-pulse" size={24} style={{animationDuration: '3s', animationDelay: '1s'}} />
               <h3 className="text-white font-semibold mb-1">Secure</h3>
               <p className="text-gray-400 text-sm">Optional password encryption</p>
             </div>
-            <div className="bg-gray-800/20 backdrop-blur-sm rounded-lg p-4 border border-purple-500/10">
-              <FileText className="text-purple-400 mb-2" size={24} />
+            <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 border border-green-500/20 hover:border-green-400 transition-all hover:shadow-lg hover:shadow-green-500/20">
+              <FileText className="text-green-400 mb-2 animate-pulse" size={24} style={{animationDuration: '3s', animationDelay: '2s'}} />
               <h3 className="text-white font-semibold mb-1">Lossless</h3>
               <p className="text-gray-400 text-sm">Original image quality preserved</p>
             </div>
