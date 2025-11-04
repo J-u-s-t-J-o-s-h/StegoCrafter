@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, Download, Eye, EyeOff, Lock, Unlock, Image, FileText } from 'lucide-react';
 import { encodeMessage, decodeMessage, downloadBlob } from './utils/steganographyUtils';
+import { track } from '@plausible-analytics/tracker';
 
 function App() {
   const [mode, setMode] = useState('encode');
@@ -46,6 +47,9 @@ function App() {
       const url = URL.createObjectURL(blob);
       setImagePreview(url);
       
+      // Track encode event
+      track('Encode', { props: { hasPassword: password ? 'yes' : 'no' } });
+      
       setError('');
     } catch (err) {
       setError(err.message || 'Failed to encode message');
@@ -67,6 +71,10 @@ function App() {
     try {
       const decoded = await decodeMessage(selectedImage, password);
       setDecodedMessage(decoded);
+      
+      // Track decode event
+      track('Decode', { props: { hasPassword: password ? 'yes' : 'no' } });
+      
       setError('');
     } catch (err) {
       setError(err.message || 'Failed to decode message');
@@ -79,6 +87,9 @@ function App() {
     if (encodedImageBlob) {
       const filename = `encoded_${Date.now()}.png`;
       downloadBlob(encodedImageBlob, filename);
+      
+      // Track download event
+      track('Download', { props: { fileType: 'encoded_image' } });
     }
   };
 
